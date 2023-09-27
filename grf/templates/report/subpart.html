@@ -1,5 +1,5 @@
 {% for subpart in subparts %}
-    <li>{{ subpart.title }} pipi</li>
+    <li>{{ subpart.title }}</li>
     {% if subpart.reportsubpart_set.all %}
         <ul>
             {% include "report/subpart.html" with subparts=subpart.reportsubpart_set.all|dictsort:"order" %}

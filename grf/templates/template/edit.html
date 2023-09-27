@@ -1,0 +1,11 @@
+<h1>{{ object.title }}</h1>
+<ul>
+    {% for template_part in template.templatepart_set.all|dictsort:"order" %}
+        <li>{{ template_part.title }}</li>
+        {% if template_part.templatesubpart_set.all %}
+            <ul>
+                {% include "template/subpart.html" with subparts=template_part.templatesubpart_set.all|dictsort:"order" %}
+            </ul>
+        {% endif %}
+    {% endfor %}
+</ul>
