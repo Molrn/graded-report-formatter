@@ -1,2 +1,12 @@
-Page d'accueil contenant la liste des rapports<br> 
-Possibilité d'en créer un nouveau, de consulter / éditer / supprimer un rapport 
+<h1>Reports</h1>
+<ul>
+    {% for report in all_reports %}
+    <li><a href="{% url 'report' id=report.id %}">{{ report.title }}</a></li>
+    {% endfor %}
+</ul>
+<h1>Templates</h1>
+<ul>
+    {% for template in all_templates %}
+    <li><a href="{% url 'report' id=report.id %}">{{ template.title }}</a></li>
+    {% endfor %}
+</ul>

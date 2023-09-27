@@ -1,1 +1,11 @@
-Edit page of a report
+<h1>{{ object.title }}</h1>
+<ul>
+    {% for report_part in report.reportpart_set.all|dictsort:"order" %}
+        <li>{{ report_part.title }} caca</li>
+        {% if report_part.reportsubpart_set.all %}
+            <ul>
+                {% include "report/subpart.html" with subparts=report_part.reportsubpart_set.all|dictsort:"order" %}
+            </ul>
+        {% endif %}
+    {% endfor %}
+</ul>
