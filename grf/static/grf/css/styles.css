@@ -1,0 +1,60 @@
+body{
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      border: 0px;
+      background-color: rgba(184, 212, 211, 0.754); 
+
+    }
+header,footer{
+        position: static;
+        line-height: 24px;
+        position: static;
+        z-index: auto;
+        background-color: rgb(205,181,150);
+        padding:10px;
+}
+
+main{
+    margin: 5%;
+    padding: 5%;
+    height: 220cm;
+    border: 0px;
+    border-radius: 50px;
+    background-color: rgb(215, 250, 217); 
+    overflow:auto;
+    padding-bottom: 150px
+    }
+      
+      
+page-container {
+    position: relative;
+    min-height: 100%;
+        }
+
+input,label {
+        margin: 0.4;
+
+      }
+label,textarea {
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+      }
+textarea {
+        padding: 10px;
+        max-width: 80%;
+        line-height: 1.5;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-shadow: 1px 1px 1px #999;
+        width: auto;
+      }
+      
+label {
+        display: block;
+        margin-bottom: 10px;
+      }
+ul {
+    list-style-type:none;
+    padding:15px;
+}

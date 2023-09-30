@@ -1,0 +1,26 @@
+{% load static %}
+<html>
+    <head>
+    <link rel="stylesheet" type="text/css" href="{% static 'grf/css/styles.css' %}">
+    <meta charset="utf-8" />
+    <title>{{ object.title }}</title>
+    </head>
+
+<body>
+
+    <div id="pagecontainer">
+        <header><h1>{{ object.title }}</h1></header>
+
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+
+
+        <footer>
+            Foot
+        </footer>
+    </div>
+</body>
+
+</html>
