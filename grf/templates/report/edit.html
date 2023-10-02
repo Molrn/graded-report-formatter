@@ -1,11 +1,79 @@
+{% load static %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="{% static 'grf/css/styles.css' %}">
+
+
 <h1>{{ object.title }}</h1>
-<ul>
+<div class="accordion" id="reportAccordion">
     {% for report_part in report.reportpart_set.all|dictsort:"order" %}
-        <li>{{ report_part.title }}</li>
-        {% if report_part.reportsubpart_set.all %}
-            <ul>
-                {% include "report/subpart.html" with subparts=report_part.reportsubpart_set.all|dictsort:"order" %}
-            </ul>
-        {% endif %}
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <span class="accordion-drag-handle">&#9776;</span> 
+                <input type="text" class="title" value="{{ report_part.title }}">
+                <input type="checkbox" title="include" class="include" value="{{ report_part.is_graded }}">
+                <button class="accordion-toggle">&#9660;</button>
+            </div>
+            <div class="accordion-content">
+                <textarea class="introduction" cols="30" rows="3">{{ report_part.introduction }}</textarea>
+                {% if report_part.reportsubpart_set.all %}
+                    <div class="accordion" id="part-{{ report_part.id }}">
+                        {% include "report/subpart.html" with subparts=report_part.reportsubpart_set.all|dictsort:"order" %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
     {% endfor %}
-</ul>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        // Add event listeners for accordion headers
+        $('.accordion-header').click(function () {
+            $(this).parent('.accordion-item').toggleClass('active');
+        });
+
+        // Make accordion items sortable within their parent accordion
+        $('.accordion').each(function () {
+            $(this).sortable({
+                items: '.accordion-item',
+                handle: '.accordion-drag-handle',
+                tolerance: 'pointer',
+                connectWith: '.accordion#' + $(this).attr('id'),
+            });
+        });
+
+        // Prevent dragging on accordion content
+        $('.accordion-content').on('mousedown', function (e) {
+            e.stopPropagation();
+        });
+    });
+
+    // Make the accordion collapsible with arrow buttons
+    $('.accordion .accordion-item').each(function () {
+        var $header = $(this).find('.accordion-header');
+        var $content = $(this).find('.accordion-content');
+        var $toggleButton = $header.find('.accordion-toggle');
+
+        // Initially, collapse all accordion items except the first one
+        if (!$(this).hasClass('active')) {
+            $content.hide();
+            $toggleButton.html('▼'); // Display down arrow
+        } else {
+            $toggleButton.html('▲'); // Display up arrow
+        }
+
+        $toggleButton.click(function (event) {
+            event.stopImmediatePropagation();
+            $(this).parent('.accordion-header').next('.accordion-content').slideToggle();
+            if ($(this).html() == '▼') {
+                $(this).html('▲'); // Change to up arrow when collapsed
+            } else {
+                $(this).html('▼'); // Change to down arrow when expanded
+            }
+        });
+    });
+</script>

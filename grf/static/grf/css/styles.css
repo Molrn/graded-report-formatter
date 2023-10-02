@@ -58,3 +58,33 @@ ul {
     list-style-type:none;
     padding:15px;
 }
+
+.accordion {
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.accordion-item {
+  border-bottom: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: grab;
+}
+
+.accordion-header {
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+}
+
+.accordion-content {
+  display: none;
+  padding: 10px;
+  background-color: #fff;
+}
+
+.accordion-item.active .accordion-content {
+  display: block;
+}
