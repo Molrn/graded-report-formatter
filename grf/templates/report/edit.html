@@ -1,10 +1,10 @@
 {% load static %}
+<link rel="stylesheet" href="{% static 'grf/css/styles.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="{% static 'grf/css/styles.css' %}">
-
+<script src="{% static 'grf/js/sortable-accordion.js' %}"></script>
 
 <h1>{{ object.title }}</h1>
 <div class="accordion" id="reportAccordion">
@@ -27,53 +27,3 @@
         </div>
     {% endfor %}
 </div>
-
-<script>
-    $(document).ready(function () {
-
-        // Add event listeners for accordion headers
-        $('.accordion-header').click(function () {
-            $(this).parent('.accordion-item').toggleClass('active');
-        });
-
-        // Make accordion items sortable within their parent accordion
-        $('.accordion').each(function () {
-            $(this).sortable({
-                items: '.accordion-item',
-                handle: '.accordion-drag-handle',
-                tolerance: 'pointer',
-                connectWith: '.accordion#' + $(this).attr('id'),
-            });
-        });
-
-        // Prevent dragging on accordion content
-        $('.accordion-content').on('mousedown', function (e) {
-            e.stopPropagation();
-        });
-    });
-
-    // Make the accordion collapsible with arrow buttons
-    $('.accordion .accordion-item').each(function () {
-        var $header = $(this).find('.accordion-header');
-        var $content = $(this).find('.accordion-content');
-        var $toggleButton = $header.find('.accordion-toggle');
-
-        // Initially, collapse all accordion items except the first one
-        if (!$(this).hasClass('active')) {
-            $content.hide();
-            $toggleButton.html('▼'); // Display down arrow
-        } else {
-            $toggleButton.html('▲'); // Display up arrow
-        }
-
-        $toggleButton.click(function (event) {
-            event.stopImmediatePropagation();
-            $(this).parent('.accordion-header').next('.accordion-content').slideToggle();
-            if ($(this).html() == '▼') {
-                $(this).html('▲'); // Change to up arrow when collapsed
-            } else {
-                $(this).html('▼'); // Change to down arrow when expanded
-            }
-        });
-    });
-</script>
