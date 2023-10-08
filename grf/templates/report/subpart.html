@@ -1,16 +1,31 @@
 {% for subpart in subparts %}
-<div class="accordion-item" draggable="true">
+<div class="accordion-item" id="{{ subpart.id }}" type="subpart">
     <div class="accordion-header">
         <span class="accordion-drag-handle">&#9776;</span> 
         <input type="text" class="title" value="{{ subpart.title }}">
-        <input type="checkbox" title="include" class="include" value="{{ report_part.is_included }}">
+        <label for="grade" class="grade-label" {% if not is_graded %}style="display: none;"{% endif %}>Grade</label>
+        <select name="grade" class="grade-select" value="{{ subpart.grade }}" {% if not is_graded %}style="display: none;"{% endif %}>
+            <option value="empty"></option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <label for="part-include">Include</label>
+        <input type="checkbox" title="include" {% if subpart.is_included %}checked{% endif %}>
         <button class="accordion-toggle">&#9660;</button>
     </div>
     <div class="accordion-content">
-        <textarea name="" id="" cols="30" rows="3">{{ subpart.introduction }}</textarea>
+        <div class="introduction">
+            Introduction
+            <input type="checkbox" title="include" value="{{ subpart.is_intro_included }}">                
+            <button>edit</button>        
+        </div>
+        <div class="text-editor" id="test">{{ subpart.introduction }}</div>
         {% if subpart.reportsubpart_set.all %}
             <div class="accordion" id="subpart-{{ subpart.id }}">
-                {% include "report/subpart.html" with subparts=subpart.reportsubpart_set.all|dictsort:"order" %}
+                {% include "report/subpart.html" with subparts=subpart.reportsubpart_set.all|dictsort:"order" is_graded=false %}
             </div>
         {% endif %}
     </div>

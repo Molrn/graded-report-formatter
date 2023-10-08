@@ -1,29 +1,39 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'grf/css/styles.css' %}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
-<script src="{% static 'grf/js/sortable-accordion.js' %}"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
+
+<script src="https://cdn.ckeditor.com/ckeditor5/36.0.0/classic/ckeditor.js"></script>
+
+<script src="{% static 'grf/js/sortable-accordion.js' %}" defer></script>
+<script src="{% static 'grf/js/text-editor.js' %}" defer></script>
+<script src="{% static 'grf/js/report.js' %}" defer></script>
+<link rel="stylesheet" href="{% static 'grf/css/styles.css' %}">
+
 
 <h1>{{ object.title }}</h1>
-<div class="accordion" id="reportAccordion">
+<div class="accordion" id="{{ object.id }}">
     {% for report_part in report.reportpart_set.all|dictsort:"order" %}
-        <div class="accordion-item">
+        <div class="accordion-item" id="{{ report_part.id }}" type="part">
             <div class="accordion-header">
                 <span class="accordion-drag-handle">&#9776;</span> 
                 <input type="text" class="title" value="{{ report_part.title }}">
-                <input type="checkbox" title="include" class="include" value="{{ report_part.is_graded }}">
+                <label for="part-grade-toggle">Grade</label>
+                <input type="checkbox" title="part-grade-toggle" class="part-grade-toggle" {% if report_part.is_graded %}checked{% endif %}>                
+                <label for="part-include">Include</label>
+                <input type="checkbox" title="part-include" class="part-include" {% if report_part.is_included %}checked{% endif %}>
                 <button class="accordion-toggle">&#9660;</button>
             </div>
             <div class="accordion-content">
-                <textarea class="introduction" cols="30" rows="3">{{ report_part.introduction }}</textarea>
+                <div class="text-editor">{{ report_part.introduction }}</div>
                 {% if report_part.reportsubpart_set.all %}
-                    <div class="accordion" id="part-{{ report_part.id }}">
-                        {% include "report/subpart.html" with subparts=report_part.reportsubpart_set.all|dictsort:"order" %}
+                    <div class="accordion" id="part-{{ report_part.id }}" type="direct-subparts">
+                        {% include "report/subpart.html" with subparts=report_part.reportsubpart_set.all|dictsort:"order" is_graded=report_part.is_graded %}
                     </div>
                 {% endif %}
             </div>
         </div>
     {% endfor %}
+    
 </div>

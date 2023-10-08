@@ -1,7 +1,6 @@
 $(document).ready(function () {
 
-    // Add event listeners for accordion headers
-    $('.accordion-header').click(function () {
+    $('.accordion-toggle').click(function () {
         $(this).parent('.accordion-item').toggleClass('active');
     });
 
