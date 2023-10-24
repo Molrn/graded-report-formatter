@@ -1,0 +1,17 @@
+<div class="accordion-item" id="{{ report_part.id }}" type="part">
+    <div class="accordion-header">
+        <span class="accordion-drag-handle">&#9776;</span> 
+        <input type="text" class="title" value="{{ report_part.title }}">
+        <label for="part-grade-toggle">Grade</label>
+        <input type="checkbox" title="part-grade-toggle" class="part-grade-toggle" {% if report_part.is_graded %}checked{% endif %}>                
+        <label for="part-include">Include</label>
+        <input type="checkbox" title="part-include" class="part-include" {% if report_part.is_included %}checked{% endif %}>
+        <button class="accordion-toggle">&#9660;</button>
+    </div>
+    <div class="accordion-content">
+        <div class="text-editor">{{ report_part.introduction }}</div>
+        <div class="accordion" id="part-{{ report_part.id }}" type="direct-subparts">
+            {% include "report/subpart.html" with subparts=report_part.reportsubpart_set.all|dictsort:"order" is_graded=report_part.is_graded is_direct=true %}
+        </div>
+    </div>
+</div>
