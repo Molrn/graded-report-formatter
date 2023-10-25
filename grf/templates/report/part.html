@@ -11,7 +11,12 @@
     <div class="accordion-content">
         <div class="text-editor">{{ report_part.introduction }}</div>
         <div class="accordion" id="part-{{ report_part.id }}" type="direct-subparts">
-            {% include "report/subpart.html" with subparts=report_part.reportsubpart_set.all|dictsort:"order" is_graded=report_part.is_graded is_direct=true %}
+            {% if report_part.id %}
+                {% for subpart in report_part.reportsubpart_set.all|dictsort:"order" %}
+                    {% include "report/subpart.html" with subpart=subpart is_graded=report_part.is_graded is_direct=True %}
+                {% endfor %}
+            {% endif %}
+            <button class="add-accordion-item add-direct-subpart">+</button>
         </div>
     </div>
 </div>

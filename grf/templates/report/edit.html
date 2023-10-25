@@ -9,12 +9,24 @@
 <script src="{% static 'grf/js/sortable-accordion.js' %}" defer></script>
 <script src="{% static 'grf/js/text-editor.js' %}" defer></script>
 <script src="{% static 'grf/js/report.js' %}" defer></script>
+<script src="{% static 'grf/js/add-parts.js' %}" defer></script>
 <link rel="stylesheet" href="{% static 'grf/css/styles.css' %}">
-
 
 <h1>{{ object.title }}</h1>
 <div class="accordion" id="{{ object.id }}">
     {% for report_part in report.reportpart_set.all|dictsort:"order" %}
         {% include "report/part.html" with report_part=report_part %}
     {% endfor %}
+    <button class="add-accordion-item add-part">+</button>
+</div>
+<div id="templates" style="display: none;">
+    <div id="template-part">
+        {% include "report/part.html" with report_part=template_part %}
+    </div>
+    <div id="template-direct-subpart">
+        {% include "report/subpart.html" with subpart=template_subpart is_direct=True %}
+    </div>
+    <div id="template-subpart">
+        {% include "report/subpart.html" with subpart=template_subpart %}
+    </div>
 </div>
