@@ -1,8 +1,0 @@
-{% for subpart in subparts %}
-    <li>{{ subpart.title }}</li>
-    {% if subpart.templatesubpart_set.all %}
-        <ul>
-            {% include "template/subpart.html" with subparts=subpart.templatesubpart_set.all|dictsort:"order" %}
-        </ul>
-    {% endif %}
-{% endfor %}

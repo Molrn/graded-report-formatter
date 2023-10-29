@@ -8,10 +8,3 @@
     <li><a href="{% url 'report' id=report.id %}">{{ report.title }}</a></li>
     {% endfor %}
 </ul>
-<h1>Templates</h1>
-<ul>
-    {% for template in all_templates %}
-    <li><a href="{% url 'template' id=template.id %}">{{ template.title }}</a></li>
-    {% endfor %}
-</ul>
-</main>
