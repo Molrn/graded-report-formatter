@@ -12,8 +12,8 @@
 <script src="{% static 'grf/js/add-parts.js' %}" defer></script>
 <link rel="stylesheet" href="{% static 'grf/css/styles.css' %}">
 
-<h1>{{ object.title }}</h1>
-<div class="accordion" id="{{ object.id }}">
+<div class="accordion" id="report-accordion" object-id="{{ object.id }}">
+    <input type="text" id="report-title" value="{{ object.title }}">
     {% for report_part in report.reportpart_set.all|dictsort:"order" %}
         {% include "report/part.html" with report_part=report_part %}
     {% endfor %}
@@ -30,3 +30,5 @@
         {% include "report/subpart.html" with subpart=template_subpart %}
     </div>
 </div>
+<button id="save-button">Display JSON</button>
+<div id="json-result"></div>

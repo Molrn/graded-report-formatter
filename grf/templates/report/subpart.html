@@ -1,4 +1,4 @@
-<div class="accordion-item" id="{{ subpart.id }}" type="subpart">
+<div class="accordion-item subpart-accordion-item" object-id="{{ subpart.id }}">
     <div class="accordion-header">
         <span class="accordion-drag-handle">&#9776;</span> 
         <input type="text" class="title" value="{{ subpart.title }}">
@@ -20,10 +20,13 @@
     <div class="accordion-content">
         <div class="introduction">
             Introduction
-            <input type="checkbox" title="include" value="{{ subpart.is_intro_included }}">                
-            <button>edit</button>        
+            <input type="checkbox" title="include" class="intro-include" value="{{ subpart.is_intro_included }}">                
+            <button>edit</button>  
+            <div class="introduction-content" style="display: none;">
+                <div class="text-editor">{{ subpart.introduction }}</div>
+            </div>      
         </div>
-        <div class="text-editor" id="test">{{ subpart.introduction }}</div>
+        <div class="text-editor">{{ subpart.content }}</div>
         <div class="accordion" id="subpart-{{ subpart.id }}">
             {% if subpart.id %}
                 {% for subpart in subpart.reportsubpart_set.all|dictsort:"order" %}
