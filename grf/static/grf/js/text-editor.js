@@ -5,7 +5,6 @@ for (let index = 0; index < textEditorsElements.length; index++) {
             items: [
                 'bold',
                 'italic',
-                'underline',
                 '|',
                 'bulletedList',
                 'numberedList',
