@@ -10,6 +10,7 @@
             "type": "object",
             "properties": {
                 "id": { "type": ["integer", "null"]},
+                "title": { "type": "string" },
                 "is_graded": { "type": "boolean" },
                 "is_included": { "type": "boolean" },
                 "introduction": { "type": "string" },

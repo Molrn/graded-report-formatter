@@ -49,6 +49,7 @@ function partToDict(partElement){
     const header = partElement.querySelector('.accordion-header'); 
     var dictPart = {
         id: parseInt(partId),
+        title: header.querySelector('.title').value,
         is_graded: header.querySelector('.grade-toggle').checked,
         is_included: header.querySelector('.include').checked,
         introduction: partElement.querySelector('.ck-content').innerHTML,
