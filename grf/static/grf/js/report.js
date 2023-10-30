@@ -12,7 +12,7 @@ for (let index = 0; index < textEditorsElements.length; index++) {
     }
 }
 
-const gradeToggles = document.getElementsByClassName('part-grade-toggle');
+const gradeToggles = document.getElementsByClassName('grade-toggle');
 
 for (let i = 0; i < gradeToggles.length; i++) {
 
