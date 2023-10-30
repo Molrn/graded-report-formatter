@@ -50,7 +50,7 @@ function subPartToDict(subPartElement, order){
         title: header.querySelector('.title').value,
         grade: parseInt(header.querySelector('.grade-select').value),
         is_included: header.querySelector('.include').checked,
-        is_intro_included: subPartElement.querySelector('.intro-include').value,
+        is_intro_included: subPartElement.querySelector('.intro-include').checked,
         content: textEditors[1].innerHTML,
         introduction: textEditors[0].innerHTML,
         subparts: []
