@@ -1,5 +1,11 @@
+import json
 from django.views import generic
+import jsonschema
 from .models import Report, ReportPart, ReportSubPart
+from django.http import HttpRequest, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils import timezone
+from django.contrib.staticfiles.finders import find
 
 class IndexView(generic.TemplateView):
     template_name = 'index.html'
@@ -29,3 +35,12 @@ class ReportCreateView(generic.CreateView):
 
 class SettingsView(generic.UpdateView):
     template_name = 'settings.html'
+
+
+@csrf_exempt
+def save_report(request:HttpRequest):
+    if request.method == 'POST':
+        request_body = json.loads(request.body.decode('utf-8'))
+        dict_report = request_body.get('report', {})
+        return JsonResponse({'message': 'Report saved'}, status=200)
+    return JsonResponse({'message': 'Failed to save report'}, status=400)

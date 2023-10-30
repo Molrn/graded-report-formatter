@@ -6,4 +6,5 @@ urlpatterns = [
     path("report/<int:id>", views.ReportView.as_view(), name="report"),
     path("report/create", views.ReportCreateView.as_view(), name="report-create"),
     path("settings", views.SettingsView.as_view(), name="settings"),
+    path('save_report/', views.save_report, name='save_report'),
 ]
