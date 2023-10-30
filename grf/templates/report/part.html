@@ -9,7 +9,7 @@
         <button class="accordion-toggle">&#9660;</button>
     </div>
     <div class="accordion-content">
-        <div class="text-editor">{{ report_part.introduction }}</div>
+        <div class="text-editor" html-content="{{ report_part.introduction }}"></div>
         <div class="accordion" id="part-{{ report_part.id }}">
             {% if report_part.id %}
                 {% for subpart in report_part.reportsubpart_set.all|dictsort:"order" %}
