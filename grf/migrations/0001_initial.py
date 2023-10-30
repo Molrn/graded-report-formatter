@@ -29,8 +29,9 @@ class Migration(migrations.Migration):
             name='ReportPart',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('order', models.PositiveIntegerField(null=True)),
+                ('order', models.PositiveIntegerField()),
                 ('is_graded', models.BooleanField(default=True)),
+                ('is_included', models.BooleanField(default=True)),
                 ('title', models.CharField(max_length=200)),
                 ('introduction', models.TextField(default='')),
                 ('report', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='grf.report')),

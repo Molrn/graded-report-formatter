@@ -20,8 +20,9 @@ class Report(models.Model):
 
 class ReportPart(models.Model):
     report = models.ForeignKey(Report, on_delete=models.CASCADE)
-    order = models.PositiveIntegerField(null=True)
+    order = models.PositiveIntegerField()
     is_graded = models.BooleanField(default=True)
+    is_included = models.BooleanField(default=True)
     title = models.CharField(max_length=200)
     introduction = models.TextField(default='')
 
