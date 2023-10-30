@@ -25,11 +25,10 @@
         {% include "report/part.html" with report_part=template_part %}
     </div>
     <div id="template-direct-subpart">
-        {% include "report/subpart.html" with subpart=template_subpart is_direct=True %}
+        {% include "report/subpart.html" with subpart=template_subpart is_graded=True is_direct=True %}
     </div>
     <div id="template-subpart">
         {% include "report/subpart.html" with subpart=template_subpart %}
     </div>
 </div>
-<button id="save-button">Display JSON</button>
-<div id="json-result"></div>
+<button id="save-button">Save</button>
