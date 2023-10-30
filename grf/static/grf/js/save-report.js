@@ -12,14 +12,20 @@ function saveReport(){
             if (response.status === 200) {
                 return response.json();
             } else {
-                throw new Error(`Warning : Report not saved (status ${response.status})`);
+                return response.json().then(data => {
+                    let message = `Status ${response.status}`;
+                    if (data.hasOwnProperty('message')) {
+                        message += `: ${data.message}`;
+                    }
+                    throw new Error(message);
+                });
             }
         })
         .then(data => {
             alert(data.message);
         })
         .catch(error => {
-            alert(error.message);
+            alert('Error : Report not saved\n'+error.message);
         });
 }
     

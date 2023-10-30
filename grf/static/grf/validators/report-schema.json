@@ -1,0 +1,49 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "id": { "type": ["integer", "null"] },
+        "title": { "type": "string" },
+        "parts": {
+            "type": "array",
+            "items": {
+            "type": "object",
+            "properties": {
+                "id": { "type": ["integer", "null"]},
+                "is_graded": { "type": "boolean" },
+                "is_included": { "type": "boolean" },
+                "introduction": { "type": "string" },
+                "subparts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/subpart"
+                    }
+                }
+            },
+            "required": ["id", "is_graded", "is_included", "introduction", "subparts"]
+        }
+      }
+    },
+    "required": ["id", "title", "parts"],
+    "definitions": {
+        "subpart": {
+            "type": "object",
+            "properties": {
+                "id": { "type": ["integer", "null"] },
+                "title": { "type": "string" },
+                "grade": { "type": ["integer", "null"] },
+                "is_included": { "type": "boolean" },
+                "is_intro_included": { "type": "boolean" },
+                "content": { "type": "string" },
+                "introduction": { "type": "string" },
+                "subparts": {
+                    "type": "array",
+                    "items": {
+                    "$ref": "#/definitions/subpart"
+                    }
+                }
+            },
+            "required": ["id", "title", "is_included", "grade", "is_intro_included", "content", "introduction", "subparts"]
+        }
+    }
+}

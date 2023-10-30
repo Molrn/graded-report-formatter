@@ -42,5 +42,21 @@ def save_report(request:HttpRequest):
     if request.method == 'POST':
         request_body = json.loads(request.body.decode('utf-8'))
         dict_report = request_body.get('report', {})
+        is_valide, validation_message = validate_json_report(dict_report)
+        if not is_valide:
+            return JsonResponse({'message': validation_message}, status=400)      
         return JsonResponse({'message': 'Report saved'}, status=200)
     return JsonResponse({'message': 'Failed to save report'}, status=400)
+
+def validate_json_report(report:dict, schema_static_path:str='grf/validators/report-schema.json'):
+    schema_path = find(schema_static_path)
+    if not schema_path:
+        raise FileNotFoundError('No file found at static path '+schema_static_path)
+    with open(schema_path, 'r') as file:
+        report_schema = json.load(file)
+    try:
+        jsonschema.validate(report, report_schema)
+        return True, ''
+    except ValidationError as e:
+        return False, e.message
+    
