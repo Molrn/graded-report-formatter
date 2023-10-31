@@ -3,8 +3,8 @@
         <span class="accordion-drag-handle">&#9776;</span> 
         <input type="text" class="title" value="{{ subpart.title }}">
         {% if is_direct %}
-            <label for="grade" class="grade-label" {% if not is_graded %}style="display: none;"{% endif %}>Grade</label>
-            <select name="grade" class="grade-select" value="{{ subpart.grade }}" {% if not is_graded %}style="display: none;"{% endif %}>
+            <label for="grade-{{ subpart.id }}" class="grade-label" {% if not is_graded %}style="display: none;"{% endif %}>Grade</label>
+            <select id="grade-{{ subpart.id }}" class="grade-select" value="{{ subpart.grade }}" {% if not is_graded %}style="display: none;"{% endif %}>
                 <option value="empty"></option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -13,8 +13,8 @@
                 <option value="5">5</option>
             </select>
         {% endif %}
-        <label for="include">Include</label>
-        <input type="checkbox" title="include" class="include" {% if subpart.is_included %}checked{% endif %}>
+        <label for="include-subpart-{{ subpart.id }}">Include</label>
+        <input type="checkbox" id="include-subpart-{{ subpart.id }}" class="include" {% if subpart.is_included %}checked{% endif %}>
         <button class="accordion-toggle">&#9660;</button>
     </div>
     <div class="accordion-content">

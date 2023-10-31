@@ -2,10 +2,10 @@
     <div class="accordion-header">
         <span class="accordion-drag-handle">&#9776;</span> 
         <input type="text" class="title" value="{{ report_part.title }}">
-        <label for="grade-toggle">Grade</label>
-        <input type="checkbox" title="grade-toggle" class="grade-toggle" {% if report_part.is_graded %}checked{% endif %}>                
-        <label for="include">Include</label>
-        <input type="checkbox" title="include" class="include" {% if report_part.is_included %}checked{% endif %}>
+        <label for="grade-toggle-{{ report_part.id }}">Grade</label>
+        <input type="checkbox" id="grade-toggle-{{ report_part.id }}" class="grade-toggle" {% if report_part.is_graded %}checked{% endif %}>                
+        <label for="include-part-{{ report_part.id }}">Include</label>
+        <input type="checkbox" id="include-part-{{ report_part.id }}" class="include" {% if report_part.is_included %}checked{% endif %}>
         <button class="accordion-toggle">&#9660;</button>
     </div>
     <div class="accordion-content">
