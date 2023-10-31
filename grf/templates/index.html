@@ -1,7 +1,14 @@
 {% load static %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-<main>
+<link rel="stylesheet" type="text/css" href="{% static 'grf/css/styles.css' %}">
+
+<div class="toolbar">
+    <a href="/grf">Home</a>
+    <div class="buttons">
+        <button id="create-report">Create report</button>
+        <button id="json-import-button">Import report</button>
+    </div>
+</div>
 <h1>Reports</h1>
 <ul>
     {% for report in all_reports %}

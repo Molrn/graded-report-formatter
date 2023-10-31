@@ -88,3 +88,33 @@ ul {
 .accordion-item.active .accordion-content {
   display: block;
 }
+
+.toolbar {
+  background-color: #333;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.toolbar .buttons {
+  display: flex;
+  justify-content: flex-end; 
+  align-items: center;
+}
+
+.toolbar button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.toolbar a {
+  color: #fff;
+  text-decoration: none;
+  margin-right: 10px;
+}

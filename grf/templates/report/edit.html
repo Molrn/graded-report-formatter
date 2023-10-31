@@ -8,10 +8,21 @@
 
 <script src="{% static 'grf/js/sortable-accordion.js' %}" defer></script>
 <script src="{% static 'grf/js/text-editor.js' %}" defer></script>
-<script src="{% static 'grf/js/report.js' %}" defer></script>
+<script src="{% static 'grf/js/grade-elements.js' %}" defer></script>
 <script src="{% static 'grf/js/save-report.js' %}" defer></script>
+<script src="{% static 'grf/js/exports.js' %}" defer></script>
 <script src="{% static 'grf/js/add-parts.js' %}" defer></script>
 <link rel="stylesheet" href="{% static 'grf/css/styles.css' %}">
+
+<div class="toolbar">
+    <a href="/grf">Home</a>
+    <div class="buttons">
+        <button id="save-button">Save</button>
+        <button id="json-export-button">Export to JSON</button>
+        <button id="pdf-export-button">Export to PDF</button>
+        <button id="word-export-button">Export to WORD</button>
+    </div>
+</div>
 
 <div class="accordion" id="report-accordion" object-id="{{ object.id }}">
     <input type="text" id="report-title" value="{{ object.title }}">
@@ -31,4 +42,3 @@
         {% include "report/subpart.html" with subpart=template_subpart %}
     </div>
 </div>
-<button id="save-button">Save</button>
