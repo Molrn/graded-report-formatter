@@ -1,11 +1,14 @@
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'grf/css/styles.css' %}">
+<script src="{% static 'grf/js/json-report.js' %}" defer></script>
+<script src="{% static 'grf/js/report-import.js' %}" defer></script>
 
 <div class="toolbar">
     <a href="/grf">Home</a>
     <div class="buttons">
         <button id="create-report">Create report</button>
+        <input type="file" id="import-file-selector" accept=".json" style="display: none" multiple="false">
         <button id="json-import-button">Import report</button>
     </div>
 </div>
