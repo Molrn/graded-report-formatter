@@ -28,27 +28,27 @@ function saveReport(){
             alert('Error : Report not saved\n'+error.message);
         });
 }
-    
-function reportToDict(){
+
+function reportToDict(is_export=false){
     const reportAccordion = document.getElementById('report-accordion');
     const reportId = parseInt(reportAccordion.getAttribute('object-id'));
     var dictReport = {
-        id: reportId,
+        id: is_export ? null : reportId,
         title: document.getElementById('report-title').value,
         parts: []
     }
     const reportParts = reportAccordion.getElementsByClassName('part-accordion-item');
     for (let i = 0; i < reportParts.length; i++) {
-        dictReport['parts'].push(partToDict(reportParts[i]));
+        dictReport['parts'].push(partToDict(reportParts[i], is_export));
     }
     return dictReport;
 }
 
-function partToDict(partElement){
+function partToDict(partElement, is_export){
     const partId = partElement.getAttribute('object-id');
     const header = partElement.querySelector('.accordion-header'); 
     var dictPart = {
-        id: parseInt(partId),
+        id: is_export ? null : parseInt(partId),
         title: header.querySelector('.title').value,
         is_graded: header.querySelector('.grade-toggle').checked,
         is_included: header.querySelector('.include').checked,
@@ -57,17 +57,17 @@ function partToDict(partElement){
     }
     const reportSubParts = partElement.querySelectorAll('.accordion-content > #part-'+partId+' > .accordion-item');
     for (let i = 0; i < reportSubParts.length; i++) {
-        dictPart['subparts'].push(subPartToDict(reportSubParts[i]));
+        dictPart['subparts'].push(subPartToDict(reportSubParts[i], is_export));
     }
     return dictPart;
 }
 
-function subPartToDict(subPartElement){
+function subPartToDict(subPartElement, is_export){
     const subPartId = subPartElement.getAttribute('object-id');
     const header = subPartElement.querySelector('.accordion-header'); 
     const textEditors = subPartElement.getElementsByClassName('ck-content');
     var dictSubPart = {
-        id: parseInt(subPartId),
+        id: is_export ? null : parseInt(subPartId),
         title: header.querySelector('.title').value,
         grade: parseInt(header.querySelector('.grade-select').value),
         is_included: header.querySelector('.include').checked,
@@ -78,10 +78,10 @@ function subPartToDict(subPartElement){
     } 
     const reportSubParts = subPartElement.querySelectorAll('.accordion-content > #subpart-'+subPartId+' > .accordion-item');
     for (let i = 0; i < reportSubParts.length; i++) {
-        dictSubPart['subparts'].push(subPartToDict(reportSubParts[i]));
+        dictSubPart['subparts'].push(subPartToDict(reportSubParts[i], is_export));
     }
     return dictSubPart;
 }
 
-const saveButton = document.getElementById('save-button')
-saveButton.addEventListener('click', saveReport) 
+const saveButton = document.getElementById('save-button');
+saveButton.addEventListener('click', saveReport);
