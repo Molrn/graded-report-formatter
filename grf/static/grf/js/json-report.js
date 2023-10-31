@@ -1,6 +1,4 @@
-function saveReport(){
-    const dictReport = reportToDict();
-    console.log(JSON.stringify(dictReport, null, 2));
+function sendReport(dictReport){
     fetch('/grf/save_report/', {
             method: 'POST',
             headers: {
@@ -82,6 +80,3 @@ function subPartToDict(subPartElement, is_export){
     }
     return dictSubPart;
 }
-
-const saveButton = document.getElementById('save-button');
-saveButton.addEventListener('click', saveReport);
