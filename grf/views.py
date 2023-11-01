@@ -72,6 +72,15 @@ def save_report(request:HttpRequest):
         return JsonResponse({'message': 'Report saved'}, status=200)
     return JsonResponse({'message': 'Failed to save report'}, status=400)
 
+@csrf_exempt
+def delete_report(request, report_id):
+    try:
+        report = Report.objects.get(id=report_id)
+        report.delete()
+        return JsonResponse({'message': 'Report deleted successfully.'}, status=200)
+    except Report.DoesNotExist:
+        return JsonResponse({'message': 'Report not found.'}, status=404)
+
 def validate_json_report(report:dict, schema_static_path:str='grf/validators/report-schema.json'):
     schema_path = find(schema_static_path)
     if not schema_path:
