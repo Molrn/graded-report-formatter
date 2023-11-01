@@ -35,6 +35,10 @@ function reportToDict(is_export=false){
         title: document.getElementById('report-title').value,
         parts: []
     }
+    if (!is_export){
+        dictReport.parts_to_remove = removedPartIds;
+        dictReport.subparts_to_remove = removedSubPartIds;
+    }
     const reportParts = reportAccordion.getElementsByClassName('part-accordion-item');
     for (let i = 0; i < reportParts.length; i++) {
         dictReport['parts'].push(partToDict(reportParts[i], is_export));

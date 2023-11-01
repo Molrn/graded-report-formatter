@@ -69,12 +69,14 @@ function setDeleteReportElementButtons(){
     for (let i = 0; i < deleteButton.length; i++) {
         deleteButton[i].addEventListener('click', function () {
             const reportElement = this.parentElement.parentElement;
-            const objectId = reportElement.getAttribute('object-id');
+            const objectId = parseInt(reportElement.getAttribute('object-id'));
             reportElement.remove();
-            if(this.classList.contains('delete-part')){
-                removedPartIds.push(objectId);
-            }else if(this.classList.contains('delete-subpart')){
-                removedSubPartIds.push(objectId);
+            if (objectId){
+                if(this.classList.contains('delete-part')){
+                    removedPartIds.push(objectId);
+                }else if(this.classList.contains('delete-subpart')){
+                    removedSubPartIds.push(objectId);
+                }
             }
         });
     }

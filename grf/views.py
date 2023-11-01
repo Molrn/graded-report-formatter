@@ -47,6 +47,13 @@ def save_report(request:HttpRequest):
         if not is_valide:
             return JsonResponse({'message': validation_message}, status=400)      
         
+        if 'parts_to_remove' in dict_report:
+            for id in dict_report['parts_to_remove']:
+                ReportPart.objects.get(pk=id).delete()
+        if 'subparts_to_remove' in dict_report:
+            for id in dict_report['subparts_to_remove']:
+                ReportSubPart.objects.get(pk=id).delete()
+        
         if dict_report['id']:
             try:
                 report = Report.objects.get(pk=dict_report['id'])
