@@ -1,38 +1,39 @@
-function sendReport(dictReport){
-    fetch('/grf/save_report/', {
+async function sendReport(dictReport) {
+    try {
+        const response = await fetch('/grf/save_report/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ report: dictReport }),
-        })
-        .then(response => {
-            if (response.status === 200) {
-                return response.json();
-            } else {
-                return response.json().then(data => {
-                    let message = `Status ${response.status}`;
-                    if (data.hasOwnProperty('message')) {
-                        message += `: ${data.message}`;
-                    }
-                    throw new Error(message);
-                });
-            }
-        })
-        .then(data => {
-            alert(data.message);
-        })
-        .catch(error => {
-            alert('Error : Report not saved\n'+error.message);
         });
+
+        if (response.status === 200) {
+            const data = await response.json();
+            if (data.hasOwnProperty('id')) {
+                return data.id;
+            }
+        } else {
+            const data = await response.json();
+            let message = `Status ${response.status}`;
+            if (data.hasOwnProperty('message')) {
+                message += `: ${data.message}`;
+            }
+            throw new Error(message);
+        }
+    } catch (error) {
+        alert('Error: Report not saved\n' + error.message);
+        console.error(error);
+    }
 }
 
-function reportToDict(is_export=false){
-    const reportAccordion = document.getElementById('report-accordion');
+function reportToDict(is_export=false, doc=document){
+    const reportAccordion = doc.getElementById('report-accordion');
     const reportId = parseInt(reportAccordion.getAttribute('object-id'));
+    const is_editor_loaded = !!(document.querySelector('.ck-content'));
     var dictReport = {
         id: is_export ? null : reportId,
-        title: document.getElementById('report-title').value,
+        title: doc.getElementById('report-title').value,
         parts: []
     }
     if (!is_export){
@@ -41,12 +42,12 @@ function reportToDict(is_export=false){
     }
     const reportParts = reportAccordion.getElementsByClassName('part-accordion-item');
     for (let i = 0; i < reportParts.length; i++) {
-        dictReport['parts'].push(partToDict(reportParts[i], is_export));
+        dictReport['parts'].push(partToDict(reportParts[i], is_export, is_editor_loaded));
     }
     return dictReport;
 }
 
-function partToDict(partElement, is_export){
+function partToDict(partElement, is_export, is_editor_loaded){
     const partId = partElement.getAttribute('object-id');
     const header = partElement.querySelector('.accordion-header'); 
     var dictPart = {
@@ -54,7 +55,7 @@ function partToDict(partElement, is_export){
         title: header.querySelector('.title').value,
         is_graded: header.querySelector('.grade-toggle').checked,
         is_included: header.querySelector('.include').checked,
-        introduction: partElement.querySelector('.ck-content').innerHTML,
+        introduction: is_editor_loaded ? partElement.querySelector('.ck-content').innerHTML : partElement.querySelector('.text-editor').getAttribute('html-content'),
         subparts: []
     }
     const reportSubParts = partElement.querySelectorAll('.accordion-content > #part-'+partId+' > .accordion-item');
@@ -64,18 +65,19 @@ function partToDict(partElement, is_export){
     return dictPart;
 }
 
-function subPartToDict(subPartElement, is_export){
+function subPartToDict(subPartElement, is_export, is_editor_loaded){
     const subPartId = subPartElement.getAttribute('object-id');
     const header = subPartElement.querySelector('.accordion-header'); 
-    const textEditors = subPartElement.getElementsByClassName('ck-content');
+    const textEditorClass = is_editor_loaded ? 'ck-content' : 'text-editor';
+    const textEditors =  subPartElement.getElementsByClassName(textEditorClass);
     var dictSubPart = {
         id: is_export ? null : parseInt(subPartId),
         title: header.querySelector('.title').value,
         grade: parseInt(header.querySelector('.grade-select').value),
         is_included: header.querySelector('.include').checked,
         is_intro_included: subPartElement.querySelector('.intro-include').checked,
-        content: textEditors[1].innerHTML,
-        introduction: textEditors[0].innerHTML,
+        content: is_editor_loaded ? textEditors[1].innerHTML: textEditors[1].getAttribute('html-content'),
+        introduction: is_editor_loaded ? textEditors[0].innerHTML: textEditors[0].getAttribute('html-content'),
         subparts: []
     } 
     const reportSubParts = subPartElement.querySelectorAll('.accordion-content > #subpart-'+subPartId+' > .accordion-item');

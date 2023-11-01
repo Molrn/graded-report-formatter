@@ -69,7 +69,7 @@ def save_report(request:HttpRequest):
             status, message = save_report_part(part, report, order)
             if not status:
                 return JsonResponse({'message': message}, status=400)
-        return JsonResponse({'message': 'Report saved'}, status=200)
+        return JsonResponse({'message': 'Report saved', 'id':report.pk}, status=200)
     return JsonResponse({'message': 'Failed to save report'}, status=400)
 
 @csrf_exempt
