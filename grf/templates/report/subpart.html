@@ -15,6 +15,7 @@
         {% endif %}
         <label for="include-subpart-{{ subpart.id }}">Include</label>
         <input type="checkbox" id="include-subpart-{{ subpart.id }}" class="include" {% if subpart.is_included %}checked{% endif %}>
+        <button class="delete delete-report-element delete-subpart"><i class="fas fa-trash-alt"></i></button>
         <button class="accordion-toggle">&#9660;</button>
     </div>
     <div class="accordion-content">

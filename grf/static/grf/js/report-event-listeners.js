@@ -4,6 +4,9 @@ for (let i = 0; i < initFunctions.length; i++) {
     document.addEventListener('DOMContentLoaded', initFunctions[i]);
 }
 
+const removedPartIds = [];
+const removedSubPartIds = [];
+
 function setGradeSelect(){
     var gradeSelect = document.getElementsByClassName('grade-select');
     const gradesArray = [1, 2, 3, 4, 5];
@@ -56,6 +59,22 @@ function setGradeToggle(){
             } else {
                 gradeSelects.forEach(function (select) {select.style.display = 'none';});
                 gradeLabels.forEach(function (select) {select.style.display = 'none';});
+            }
+        });
+    }
+}
+
+function setDeleteReportElementButtons(){
+    const deleteButton = document.getElementsByClassName('delete-report-element');
+    for (let i = 0; i < deleteButton.length; i++) {
+        deleteButton[i].addEventListener('click', function () {
+            const reportElement = this.parentElement.parentElement;
+            const objectId = reportElement.getAttribute('object-id');
+            reportElement.remove();
+            if(this.classList.contains('delete-part')){
+                removedPartIds.push(objectId);
+            }else if(this.classList.contains('delete-subpart')){
+                removedSubPartIds.push(objectId);
             }
         });
     }

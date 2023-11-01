@@ -6,6 +6,7 @@
         <input type="checkbox" id="grade-toggle-{{ report_part.id }}" class="grade-toggle" {% if report_part.is_graded %}checked{% endif %}>                
         <label for="include-part-{{ report_part.id }}">Include</label>
         <input type="checkbox" id="include-part-{{ report_part.id }}" class="include" {% if report_part.is_included %}checked{% endif %}>
+        <button class="delete delete-report-element delete-part"><i class="fas fa-trash-alt"></i></button>
         <button class="accordion-toggle">&#9660;</button>
     </div>
     <div class="accordion-content">
