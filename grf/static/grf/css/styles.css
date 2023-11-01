@@ -59,36 +59,6 @@ ul {
     padding:15px;
 }
 
-.accordion {
-  width: 100%;
-  max-width: 400px;
-  margin: 20px auto;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.accordion-item {
-  border-bottom: 1px solid #ccc;
-  background-color: #f9f9f9;
-  cursor: grab;
-}
-
-.accordion-header {
-  padding: 10px;
-  cursor: pointer;
-  display: flex;
-}
-
-.accordion-content {
-  display: none;
-  padding: 10px;
-  background-color: #fff;
-}
-
-.accordion-item.active .accordion-content {
-  display: block;
-}
-
 .toolbar {
   background-color: #333;
   color: #fff;
@@ -117,4 +87,45 @@ ul {
   color: #fff;
   text-decoration: none;
   margin-right: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid #ccc;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+button.delete {
+  background-color: #ff5050;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+button.delete:hover {
+  background-color: #ff0000;
 }
