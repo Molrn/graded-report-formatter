@@ -30,14 +30,6 @@ class ReportView(generic.DetailView):
         context['template_subpart'] = ReportSubPart(pk=None)
         return context
 
-class ReportCreateView(generic.CreateView):
-    model = Report
-    template_name = 'report/create.html'
-
-class SettingsView(generic.UpdateView):
-    template_name = 'settings.html'
-
-
 @csrf_exempt
 def save_report(request:HttpRequest):
     if request.method == 'POST':
