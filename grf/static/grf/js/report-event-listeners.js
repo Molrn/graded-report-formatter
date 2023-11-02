@@ -1,4 +1,4 @@
-const initFunctions = [setSortableAccordion, setGradeSelect, setGradeToggle, setAddingButtons, setDeleteReportElementButtons];
+const initFunctions = [setSortableAccordion, setGradeSelect, setGradeToggle, setAddingButtons, setDeleteReportElementButtons, setIntroShowButton];
 
 for (let i = 0; i < initFunctions.length; i++) {
     document.addEventListener('DOMContentLoaded', initFunctions[i]);
@@ -41,6 +41,7 @@ function setAddingButtons(){
             setSortableAccordion();
             setAddingButtons();
             setDeleteReportElementButtons();
+            setIntroShowButton();
         });
     }
 }
@@ -60,6 +61,17 @@ function setGradeToggle(){
                 gradeSelects.forEach(function (select) {select.style.display = 'none';});
                 gradeLabels.forEach(function (select) {select.style.display = 'none';});
             }
+        });
+    }
+}
+
+function setIntroShowButton(){
+    const introButton = document.getElementsByClassName('hide-show-subpart-intro');
+    for (let i = 0; i < introButton.length; i++) {
+        introButton[i].addEventListener('click', function () {
+            const isShow = introButton[i].innerHTML=="Show"; 
+            introButton[i].innerHTML= isShow ? "Hide" : "Show";
+            introButton[i].nextElementSibling.style.display = isShow ? 'block' : 'none';
         });
     }
 }
