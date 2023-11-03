@@ -30,6 +30,14 @@ class ReportView(generic.DetailView):
         context['template_subpart'] = ReportSubPart(pk=None)
         return context
 
+class ReportDisplayView(generic.DetailView):
+    model = Report
+    template_name = 'report/display.html'
+    
+    def get_object(self, queryset=None):
+        id = self.kwargs.get("id")
+        return Report.objects.get(pk=id)
+
 @csrf_exempt
 def save_report(request:HttpRequest):
     if request.method == 'POST':

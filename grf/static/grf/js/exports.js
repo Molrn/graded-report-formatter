@@ -17,3 +17,22 @@ jsonExportButton.addEventListener('click', function (){
     a.click();
     URL.revokeObjectURL(url);
 });
+
+const pdfExportButton = document.getElementById('pdf-export-button');
+pdfExportButton.addEventListener('click', function (){
+    const reportId = document.getElementById('report-accordion').getAttribute('object-id');
+    const reportTitle = document.getElementById('report-title').value;
+    fetch('/grf/report/'+reportId+'/display')
+        .then(response => response.text())
+        .then(html => {
+            var doc = new jspdf.jsPDF();
+            doc.html(html, {
+                callback: function (pdf) {
+                    pdf.save(reportTitle + '.pdf');
+                },
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });    
+});
