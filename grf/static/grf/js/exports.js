@@ -1,7 +1,6 @@
 const saveButton = document.getElementById('save-button');
 saveButton.addEventListener('click', function(){
     const dictReport = reportToDict();
-    console.log(JSON.stringify(dictReport, null, 2));
     sendReport(dictReport);
 });
 
@@ -19,9 +18,10 @@ jsonExportButton.addEventListener('click', function (){
 });
 
 const pdfExportButton = document.getElementById('pdf-export-button');
-pdfExportButton.addEventListener('click', function (){
-    const reportId = document.getElementById('report-accordion').getAttribute('object-id');
+pdfExportButton.addEventListener('click', async function (){
     const reportTitle = document.getElementById('report-title').value;
+    const dictReport = reportToDict();
+    const reportId = await sendReport(dictReport, skip_alert=true);
     fetch('/grf/report/'+reportId+'/display')
         .then(response => response.text())
         .then(html => {

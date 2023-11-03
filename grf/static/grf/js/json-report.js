@@ -1,4 +1,4 @@
-async function sendReport(dictReport) {
+async function sendReport(dictReport, skip_alert=false) {
     try {
         const response = await fetch('/grf/save_report/', {
             method: 'POST',
@@ -11,6 +11,9 @@ async function sendReport(dictReport) {
         if (response.status === 200) {
             const data = await response.json();
             if (data.hasOwnProperty('id')) {
+                if (!skip_alert) {
+                    alert('Report saved');
+                }
                 return data.id;
             }
         } else {
