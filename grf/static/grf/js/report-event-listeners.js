@@ -13,7 +13,7 @@ function setGradeSelect(){
     for (let index = 0; index < textEditorsElements.length; index++) {
         if(gradeSelect[index]){
             let value = gradeSelect[index].getAttribute('value');
-            if(!gradesArray.includes(value)){
+            if(!gradesArray.includes(parseInt(value))){
                 gradeSelect[index].value='empty';
             } else {
                 gradeSelect[index].value=value;
