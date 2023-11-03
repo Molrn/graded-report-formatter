@@ -1,0 +1,22 @@
+{% load static %}
+{% if subpart.is_included %}
+    <div class="report-part">
+        <h{{ depth }} class="counter" id="subpart-{{ subpart.id }}">
+            {{ subpart.title }}
+            {% if is_graded and subpart.grade is not None %}
+                <img class="grade-image" src="/static/grf/images/grade-{{ subpart.grade }}.png">
+            {% endif %}
+        </h{{ depth }}>
+        {% if subpart.is_intro_included %}
+            <div class="subpart-introduction">{{ subpart.introduction|safe }}</div>
+        {% endif %}
+        <div class="subpart-content">{{ subpart.content|safe }}</div>
+        {% if subpart.reportsubpart_set.all %}
+            <div class="subparts">
+                {% for subpart in subpart.reportsubpart_set.all|dictsort:"order" %}
+                    {% include "report/subpart-display.html" with subpart=subpart is_graded=False depth=depth|add:1 %}            
+                {% endfor %}
+            </div>  
+    </div>
+    {% endif %}      
+{% endif %}  

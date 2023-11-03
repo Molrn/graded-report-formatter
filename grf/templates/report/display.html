@@ -1,0 +1,23 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'grf/css/report-display.css' %}">
+
+<div id="report-title">{{ report.title }}</div>
+{% for report_part in report.reportpart_set.all|dictsort:"order" %}
+    {% if report_part.is_included %}
+        <div class="report-part">
+            <h1 class="counter" id="part-{{ report_part.id }}">{{ report_part.title }}</h1>
+            </div>
+            <div class="content">
+                <div class="part-content">{{ report_part.introduction|safe }}</div>
+                {% if report_part.reportsubpart_set.all %}
+                <div class="subparts">
+                    {% for subpart in report_part.reportsubpart_set.all|dictsort:"order" %}
+                        {% include "report/subpart-display.html" with subpart=subpart is_graded=report_part.is_graded depth=2 %}
+                    {% endfor %}
+                </div>  
+                {% endif %}      
+            </div>
+        </div>
+    {% endif %}    
+{% endfor %}
