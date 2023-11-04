@@ -4,9 +4,6 @@ from django.db import migrations, models
 import django.db.models.deletion
 import django.utils.timezone
 
-from grf.models import Report
-
-
 class Migration(migrations.Migration):
 
     initial = True
@@ -52,5 +49,4 @@ class Migration(migrations.Migration):
                 ('parent_subpart', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='grf.reportsubpart')),
             ],
         ),
-        migrations.RunPython(Report.create_default)
     ]

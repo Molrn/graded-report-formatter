@@ -7,16 +7,6 @@ class Report(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
     template = models.ForeignKey('self', on_delete=models.DO_NOTHING, null=True)
-    
-    def create_default(apps, schema_editor):
-        report_ex = Report.objects.create(title='Report Example')
-        part1 = ReportPart.objects.create(report=report_ex, title='Part 1', order=1)
-        ReportPart.objects.create(report=report_ex, title='Part 2', order=2)
-        subpart = ReportSubPart.objects.create(parent_part=part1, title='SubPart', order=1)
-        ReportSubPart.objects.create(parent_subpart=subpart, title='SubSubPart', order=1)
-
-    def to_html(self):
-        return
 
 class ReportPart(models.Model):
     report = models.ForeignKey(Report, on_delete=models.CASCADE)
