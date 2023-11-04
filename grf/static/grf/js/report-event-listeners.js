@@ -22,32 +22,38 @@ function setGradeSelect(){
     }
 }
 
-function setAddingButtons(){
-    const templatePart = document.querySelector('#template-part > .accordion-item');
-    const templateSubPart = document.querySelector('#template-part > .accordion-item');
-    const templateDirectSubPart = document.querySelector('#template-direct-subpart > .accordion-item');
-    const addingButtons = document.getElementsByClassName('add-accordion-item');
-
+function setAddingButtons(event, element=document){
+    const templatePartId = 'template-part';
+    const templateSubPartId = 'template-subpart';
+    const templateDirectSubPartId = 'template-direct-subpart';
+    const addingButtons = element.getElementsByClassName('add-accordion-item');
     for (let i = 0; i < addingButtons.length; i++) {
         addingButtons[i].addEventListener('click', function (event) {
-            const accordionContent = this.parentNode;
+            var newElementId;
             if (this.classList.contains('add-subpart')) { 
-                accordionContent.insertBefore(templateSubPart.cloneNode(true), event.target);
+                newElementId = templateSubPartId;
             } else if (this.classList.contains('add-part')){
-                accordionContent.insertBefore(templatePart.cloneNode(true), event.target);
+                newElementId = templatePartId;
             }else if (this.classList.contains('add-direct-subpart')){
-                accordionContent.insertBefore(templateDirectSubPart.cloneNode(true), event.target);
+                newElementId = templateDirectSubPartId;
+            } else {
+                console.error('Element to add no specified (subpart, part, direct subpart)');
+                return ;
             }
+            const templateElement = document.querySelector('#'+newElementId+' > .accordion-item')
+            const newElement = templateElement.cloneNode(true);
+            this.parentNode.insertBefore(newElement, event.target);
             setSortableAccordion();
-            setAddingButtons();
-            setDeleteReportElementButtons();
-            setIntroShowButton();
-        });
+            setAddingButtons(element=newElement);
+            setDeleteReportElementButtons(element=newElement);
+            setIntroShowButton(element=newElement);
+            setGradeToggle(element=newElement);
+        }, { once: true });
     }
 }
 
-function setGradeToggle(){
-    const gradeToggles = document.getElementsByClassName('grade-toggle');
+function setGradeToggle(event, element=document){
+    const gradeToggles = element.getElementsByClassName('grade-toggle');
     for (let i = 0; i < gradeToggles.length; i++) {
         gradeToggles[i].addEventListener('change', function () {
             const accordionItem = this.parentElement.parentElement;
@@ -61,23 +67,23 @@ function setGradeToggle(){
                 gradeSelects.forEach(function (select) {select.style.display = 'none';});
                 gradeLabels.forEach(function (select) {select.style.display = 'none';});
             }
-        });
+        }, { once: true });
     }
 }
 
-function setIntroShowButton(){
-    const introButton = document.getElementsByClassName('hide-show-subpart-intro');
+function setIntroShowButton(event, element=document){
+    const introButton = element.getElementsByClassName('hide-show-subpart-intro');
     for (let i = 0; i < introButton.length; i++) {
         introButton[i].addEventListener('click', function () {
             const isShow = introButton[i].innerHTML=="Show"; 
             introButton[i].innerHTML= isShow ? "Hide" : "Show";
             introButton[i].nextElementSibling.style.display = isShow ? 'block' : 'none';
-        });
+        }, { once: true });
     }
 }
 
-function setDeleteReportElementButtons(){
-    const deleteButton = document.getElementsByClassName('delete-report-element');
+function setDeleteReportElementButtons(event, element=document){
+    const deleteButton = element.getElementsByClassName('delete-report-element');
     for (let i = 0; i < deleteButton.length; i++) {
         deleteButton[i].addEventListener('click', function () {
             const reportElement = this.parentElement.parentElement;
@@ -90,11 +96,11 @@ function setDeleteReportElementButtons(){
                     removedSubPartIds.push(objectId);
                 }
             }
-        });
+        }, { once: true });
     }
 }
 
-function setSortableAccordion(event){
+function setSortableAccordion(){
     $('.accordion-toggle').click(function () {
         $(this).parent('.accordion-item').toggleClass('active');
     });
@@ -117,7 +123,6 @@ function setSortableAccordion(event){
     // Make the accordion collapsible
     $('.accordion .accordion-item').each(function () {
         var $header = $(this).find('.accordion-header');
-        var $content = $(this).find('.accordion-content');
         var $toggleButton = $header.find('.accordion-toggle');
 
         if (!$(this).hasClass('active')) {
