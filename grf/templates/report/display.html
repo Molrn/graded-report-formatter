@@ -1,6 +1,7 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'grf/css/report-display.css' %}">
+<link rel="stylesheet" href="{% static 'grf/css/multi-level-numbering.css' %}">
 
 <div id="report-title">{{ report.title }}</div>
 {% for report_part in report.reportpart_set.all|dictsort:"order" %}
