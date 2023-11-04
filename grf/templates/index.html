@@ -59,7 +59,7 @@
 <script>
     function deleteReport(button) {
         const reportId = button.getAttribute('data-report-id');
-        fetch(`/grf/delete_report/${reportId}/`, {
+        fetch(`/grf/delete_report/${reportId}`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
         })

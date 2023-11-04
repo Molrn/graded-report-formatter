@@ -25,8 +25,15 @@ pdfExportButton.addEventListener('click', async function (){
     fetch('/grf/report/'+reportId+'/display')
         .then(response => response.text())
         .then(html => {
+            var parser = new DOMParser();
+            var reportHtmlExport = parser.parseFromString(html, 'text/html');
+            var editableStyle = reportHtmlExport.getElementById('editable-style');
+            if (editableStyle) {
+                editableStyle.style.display = 'none';
+            }
+            var modifiedHtmlReport = new XMLSerializer().serializeToString(reportHtmlExport);
             var doc = new jspdf.jsPDF();
-            doc.html(html, {
+            doc.html(modifiedHtmlReport, {
                 callback: function (pdf) {
                     pdf.save(reportTitle + '.pdf');
                 },
@@ -34,5 +41,5 @@ pdfExportButton.addEventListener('click', async function (){
         })
         .catch(error => {
             console.error('Error:', error);
-        });    
+        });
 });

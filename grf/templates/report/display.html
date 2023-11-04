@@ -3,7 +3,28 @@
 <link rel="stylesheet" href="{% static 'grf/css/report-display.css' %}">
 <link rel="stylesheet" href="{% static 'grf/css/multi-level-numbering.css' %}">
 
-<style id="editable-style" contenteditable style="display:block; white-space: pre;"></style>
+<div id="editable-style">
+    Document style:
+    <style contenteditable style="display:block; white-space: pre;" 
+        report-id="{{ report.id }}">{{ report.css_style }}</style>
+    <button onclick="saveReportStyle()">Save style</button>
+    <script>
+        function saveReportStyle() {
+            const editableStyleElement = document.querySelector('#editable-style > style');
+            const reportId = editableStyleElement.getAttribute('report-id');
+            fetch(`/grf/save_report_styling/${reportId}`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({  style: editableStyleElement.innerHTML}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => { console.error(error); });
+        }
+    </script>
+</div>
 
 <div id="report-title">{{ report.title }}</div>
 {% for report_part in report.reportpart_set.all|dictsort:"order" %}

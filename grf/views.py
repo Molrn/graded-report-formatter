@@ -81,6 +81,22 @@ def delete_report(request, report_id):
     except Report.DoesNotExist:
         return JsonResponse({'message': 'Report not found.'}, status=404)
 
+@csrf_exempt
+def save_report_styling(request, report_id):
+    if request.method == 'POST':
+        request_body = json.loads(request.body.decode('utf-8'))
+        css_style = request_body.get('style', {})
+        if not css_style:
+            return JsonResponse({'message': 'No style in request body'}, status=400)
+
+        try:    
+            report = Report.objects.get(id=report_id)
+            report.css_style = css_style
+            report.save()
+            return JsonResponse({'message': 'Styling saved'}, status=200)
+        except Report.DoesNotExist:
+            return JsonResponse({'message': 'Report not found'}, status=400)
+
 def validate_json_report(report:dict, schema_static_path:str='grf/validators/report-schema.json'):
     schema_path = find(schema_static_path)
     if not schema_path:

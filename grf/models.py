@@ -2,11 +2,17 @@ from django.db import models
 from django.utils import timezone
 
 
+def get_report_styling_file_content():
+    file_path = 'grf/static/grf/css/report-display.css'
+    with open(file_path, 'r') as f:
+        return f.read()
+
 class Report(models.Model):
     title = models.CharField(max_length=100)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
     template = models.ForeignKey('self', on_delete=models.DO_NOTHING, null=True)
+    css_style = models.TextField(default=get_report_styling_file_content)
 
 class ReportPart(models.Model):
     report = models.ForeignKey(Report, on_delete=models.CASCADE)
