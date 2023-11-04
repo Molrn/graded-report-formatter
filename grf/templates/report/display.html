@@ -3,6 +3,8 @@
 <link rel="stylesheet" href="{% static 'grf/css/report-display.css' %}">
 <link rel="stylesheet" href="{% static 'grf/css/multi-level-numbering.css' %}">
 
+<style id="editable-style" contenteditable style="display:block; white-space: pre;"></style>
+
 <div id="report-title">{{ report.title }}</div>
 {% for report_part in report.reportpart_set.all|dictsort:"order" %}
     {% if report_part.is_included %}
@@ -21,3 +23,14 @@
         </div>
     {% endif %}    
 {% endfor %}
+
+<script>
+    fetch('/static/grf/css/report-display.css')
+        .then(response => response.text())
+        .then(cssContent => {
+            document.getElementById('editable-style').innerHTML = cssContent;
+        })
+        .catch(error => {
+            console.error('Error fetching CSS:', error);
+        });
+</script>
