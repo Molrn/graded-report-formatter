@@ -5,9 +5,8 @@
 <div id="report-title">{{ report.title }}</div>
 {% for report_part in report.reportpart_set.all|dictsort:"order" %}
     {% if report_part.is_included %}
-        <div class="report-part">
-            <h1 class="counter" id="part-{{ report_part.id }}">{{ report_part.title }}</h1>
-            </div>
+        <div class="report-part" id="part-{{ report_part.id }}">
+            <h1 class="counter" >{{ report_part.title }}</h1>
             <div class="content">
                 <div class="part-content">{{ report_part.introduction|safe }}</div>
                 {% if report_part.reportsubpart_set.all %}

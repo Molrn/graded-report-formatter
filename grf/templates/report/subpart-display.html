@@ -1,7 +1,6 @@
-{% load static %}
 {% if subpart.is_included %}
-    <div class="report-part">
-        <h{{ depth }} class="counter" id="subpart-{{ subpart.id }}">
+    <div class="report-part" id="subpart-{{ subpart.id }}">
+        <h{{ depth }} class="counter">
             {{ subpart.title }}
             {% if is_graded and subpart.grade is not None %}
                 <img class="grade-image" src="/static/grf/images/grade-{{ subpart.grade }}.png">
