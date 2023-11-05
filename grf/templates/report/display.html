@@ -1,29 +1,14 @@
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'grf/css/report-display.css' %}">
 <link rel="stylesheet" href="{% static 'grf/css/multi-level-numbering.css' %}">
+<script src="{% static 'grf/js/editable-style.js' %}" defer></script>
 
 <div id="editable-style">
     Document style:
-    <style contenteditable style="display:block; white-space: pre;" 
-        report-id="{{ report.id }}">{{ report.css_style }}</style>
+    <style report-id="{{ report.id }}"></style>
+    <textarea>{{ report.css_style }}</textarea>
     <button onclick="saveReportStyle()">Save style</button>
-    <script>
-        function saveReportStyle() {
-            const editableStyleElement = document.querySelector('#editable-style > style');
-            const reportId = editableStyleElement.getAttribute('report-id');
-            fetch(`/grf/save_report_styling/${reportId}`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({  style: editableStyleElement.innerHTML}),
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-            })
-            .catch(error => { console.error(error); });
-        }
-    </script>
+    <br/><br/>
 </div>
 
 <div id="report-title">{{ report.title }}</div>
@@ -44,14 +29,3 @@
         </div>
     {% endif %}    
 {% endfor %}
-
-<script>
-    fetch('/static/grf/css/report-display.css')
-        .then(response => response.text())
-        .then(cssContent => {
-            document.getElementById('editable-style').innerHTML = cssContent;
-        })
-        .catch(error => {
-            console.error('Error fetching CSS:', error);
-        });
-</script>
