@@ -1,12 +1,19 @@
 {% load static %}
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/mode/css/css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/addon/hint/show-hint.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/addon/hint/css-hint.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/addon/hint/show-hint.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/codemirror.min.css">
+
 <link rel="stylesheet" href="{% static 'grf/css/multi-level-numbering.css' %}">
 <script src="{% static 'grf/js/editable-style.js' %}" defer></script>
 
 <div id="editable-style">
     Document style:
     <style report-id="{{ report.id }}"></style>
-    <textarea>{{ report.css_style }}</textarea>
+    <textarea id="css-editor">{{ report.css_style }}</textarea>
     <button onclick="saveReportStyle()">Save style</button>
     <br/><br/>
 </div>

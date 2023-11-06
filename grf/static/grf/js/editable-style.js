@@ -1,12 +1,20 @@
-const styleTextAreaElement = document.querySelector('#editable-style > textarea');
 const editableStyleElement = document.querySelector('#editable-style > style');   
+
+const cssEditor = CodeMirror.fromTextArea(
+    document.getElementById('css-editor'), {
+        mode: 'text/css',
+        lineNumbers: true,
+        autoCloseBrackets: true,
+        theme: 'default',
+        extraKeys: { 'Ctrl-Space': 'autocomplete' },
+    });
 
 function saveReportStyle() {
     const reportId = editableStyleElement.getAttribute('report-id');
     fetch(`/grf/save_report_styling/${reportId}`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({  style: styleTextAreaElement.value }),
+        body: JSON.stringify({  style: cssEditor.getValue() }),
     })
     .then(response => response.json())
     .then(data => {
@@ -14,37 +22,15 @@ function saveReportStyle() {
     })
     .catch(error => { console.error(error); });
 }
-     
-styleTextAreaElement.addEventListener('input', function(){
-    setTimeout(function() {
-        editableStyleElement.textContent = styleTextAreaElement.value;
-    }, 200); 
-});
+    
+//CodeMirror.showHint(cssEditor, CodeMirror.hint.css);
 
 document.addEventListener('DOMContentLoaded', function(){
-    editableStyleElement.textContent = styleTextAreaElement.value;
+    editableStyleElement.textContent = cssEditor.getValue();
 });
 
-styleTextAreaElement.setAttribute("style", 
-    "height:" + (styleTextAreaElement.scrollHeight) + "px;"+
-    "overflow-y:hidden;"+
-    "width:100%;"+
-    "tab-size: 4;");
-  
-styleTextAreaElement.addEventListener("input", function () {
-    this.style.height = 0;
-    this.style.height = (this.scrollHeight) + "px";
+cssEditor.on('change', (editor, change) => {
+    setTimeout(function() {
+        editableStyleElement.textContent = cssEditor.getValue();
+    }, 200); 
 });
-
-styleTextAreaElement.addEventListener("keydown", function (e) {
-  if (e.key === "Tab") {
-    e.preventDefault();
-    const start = this.selectionStart;
-    const end = this.selectionEnd;
-    const tabCharacter = "\t";
-    const text = this.value;
-    this.value = text.substring(0, start) + tabCharacter + text.substring(end);
-    this.selectionStart = this.selectionEnd = start + tabCharacter.length;
-  }
-});
-
