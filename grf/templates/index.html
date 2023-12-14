@@ -4,8 +4,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'grf/css/toolbar.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <script src="{% static 'grf/js/json-report.js' %}" defer></script>
-<script src="{% static 'grf/js/report-import.js' %}" defer></script>
-<script src="{% static 'grf/js/create-report.js' %}" defer></script>
+<script src="{% static 'grf/js/report-CRUD.js' %}" defer></script>
 
 <div class="toolbar">
     <a href="/grf">Home</a>
@@ -56,19 +55,3 @@
         <button id="submit-report">Create</button>
     </div>
 </div>
-
-<script>
-    function deleteReport(button) {
-        const reportId = button.getAttribute('data-report-id');
-        fetch(`/grf/delete_report/${reportId}`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.message);
-            location.reload();
-        })
-        .catch(error => { console.error(error); });
-    }
-</script>
