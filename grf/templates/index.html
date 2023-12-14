@@ -2,6 +2,7 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'grf/css/styles.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'grf/css/toolbar.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'grf/css/modal.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <script src="{% static 'grf/js/json-report.js' %}" defer></script>
 <script src="{% static 'grf/js/report-CRUD.js' %}" defer></script>
@@ -39,9 +40,9 @@
     </tbody>
 </table>
 
-<div id="popup-container" class="popup">
-    <div class="popup-content">
-        <span class="close" id="close-popup">&times;</span>
+<div id="modal-container" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
         <h2>Create a New Report</h2>
         <label for="new-report-title">Report Title:</label>
         <input type="text" id="new-report-title">
