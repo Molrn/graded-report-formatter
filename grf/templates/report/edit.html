@@ -22,13 +22,13 @@
 <div class="toolbar">
     <a href="/grf">Home</a>
     <div class="buttons">
-        <button id="save-button">Save</button>
-        <button id="json-export-button">Export to JSON</button>
+        <button onclick="saveReport()">Save</button>
+        <button onclick="exportToJSON()">Export to JSON</button>
         <a href="/grf/report/{{ report.id }}/display">        
             <button>HTML preview</button>
         </a>
-        <button id="pdf-export-button">Export to PDF</button>
-        <button id="word-export-button">Export to WORD</button>
+        <button onclick="exportToPDF()">Export to PDF</button>
+        <button>Export to WORD</button>
     </div>
 </div>
 

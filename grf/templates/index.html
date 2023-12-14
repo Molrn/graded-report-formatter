@@ -10,9 +10,12 @@
 <div class="toolbar">
     <a href="/grf">Home</a>
     <div class="buttons">
-        <button id="create-report-button">Create report</button>
-        <input type="file" id="import-file-selector" accept=".json" style="display: none" multiple="false">
-        <button id="json-import-button">Import report</button>
+        <button onclick="openReportCreationModal()">Create report</button>
+        <input type="file" id="import-file-selector" onchange="importReport()" accept=".json" multiple="false" style="display: none">
+        <script>
+            const fileSelector = document.getElementById('import-file-selector');
+        </script>            
+        <button onclick="fileSelector.click()">Import report</button>
     </div>
 </div>
 <table>
@@ -42,7 +45,7 @@
 
 <div id="modal-container" class="modal">
     <div class="modal-content">
-        <span class="close">&times;</span>
+        <span class="close" onclick="closeReportCreationModal()">&times;</span>
         <h2>Create a New Report</h2>
         <label for="new-report-title">Report Title:</label>
         <input type="text" id="new-report-title">
@@ -53,6 +56,6 @@
                 <option value="{{ report.id }}">{{ report.title }}</option>
             {% endfor %}
         </select>        
-        <button id="submit-report">Create</button>
+        <button onclick="createReport()">Create</button>
     </div>
 </div>
