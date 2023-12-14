@@ -30,6 +30,19 @@ async function sendReport(dictReport, skip_alert=false) {
     }
 }
 
+async function getReportDict(id, is_export){
+    const reportUrl = 'report/'+id.toString();
+    const response = await fetch(reportUrl);
+    if (response.status === 200) {
+        const reportHtmlPage = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(reportHtmlPage, 'text/html');
+        return reportToDict(is_export, doc);
+    } else {
+        console.error('Error: status '+response.status.toString()+'when fetching '+reportUrl);
+    }
+}
+
 function reportToDict(is_export=false, doc=document){
     const reportAccordion = doc.getElementById('report-accordion');
     const reportId = parseInt(reportAccordion.getAttribute('object-id'));
