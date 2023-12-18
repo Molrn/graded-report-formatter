@@ -10,7 +10,7 @@
 <div class="toolbar">
     <a href="/grf">Home</a>
     <div class="buttons">
-        <button onclick="openReportCreationModal()">Create report</button>
+        <button onclick="openModal()">Create report</button>
         <input type="file" id="import-file-selector" onchange="importReport()" accept=".json" multiple="false" style="display: none">
         <script>
             const fileSelector = document.getElementById('import-file-selector');
@@ -45,7 +45,7 @@
 
 <div id="modal-container" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="closeReportCreationModal()">&times;</span>
+        <span class="close" onclick="closeModal()">&times;</span>
         <h2>Create a New Report</h2>
         <label for="new-report-title">Report Title:</label>
         <input type="text" id="new-report-title">

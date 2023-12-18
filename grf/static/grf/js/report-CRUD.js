@@ -1,8 +1,8 @@
-function openReportCreationModal(){
+function openModal(){
     document.getElementById('modal-container').style.display = 'block';
 }
 
-function closeReportCreationModal(){
+function closeModal(){
     document.getElementById('modal-container').style.display = 'none';
 }
 
@@ -21,9 +21,7 @@ async function createReport(){
         };
     }
     const reportId = await sendReport(newReport);    
-    closeReportCreationModal();
     window.location.href = 'report/'+reportId.toString();
-
 }
 
 function deleteReport(button) {
