@@ -34,7 +34,8 @@
                 <td>{{ report.updated_at }}</td>
                 <td>{{ report.created_at }}</td>
                 <td>
-                    <button class="delete delete-report-button" data-report-id="{{ report.id }}" onclick="deleteReport(this)">
+                    <button class="delete delete-report-button" data-report-id="{{ report.id }}" 
+                        onclick="deleteReport(this.getAttribute('data-report-id'))">
                         <i class="fas fa-trash-alt"></i>
                     </button>
                 </td>

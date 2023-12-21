@@ -24,8 +24,7 @@ async function createReport(){
     window.location.href = 'report/'+reportId.toString();
 }
 
-function deleteReport(button) {
-    const reportId = button.getAttribute('data-report-id');
+function deleteReport(reportId) {
     fetch(`/grf/delete_report/${reportId}`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
