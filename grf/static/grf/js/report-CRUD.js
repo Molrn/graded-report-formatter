@@ -20,7 +20,7 @@ async function createReport(){
             title: newReportTitle
         };
     }
-    const reportId = await sendReport(newReport);    
+    const reportId = await saveReport(newReport);    
     window.location.href = 'report/'+reportId.toString();
 }
 
@@ -44,7 +44,7 @@ async function importReport(){
         reader.onload = async function () {
             try {
                 dictReport = JSON.parse(reader.result);
-                await sendReport(dictReport);
+                await saveReport(dictReport);
                 setTimeout(function() {
                     location.reload();
                 }, 1000);
@@ -55,11 +55,6 @@ async function importReport(){
         };
         reader.readAsText(file);
     }
-}
-
-function saveReport(){
-    const dictReport = reportToDict();
-    sendReport(dictReport);
 }
 
 function exportToJSON(){

@@ -1,4 +1,4 @@
-async function sendReport(dictReport, skip_alert=false) {
+async function saveReport(dictReport, skip_alert=false) {
     try {
         const response = await fetch('/grf/save_report/', {
             method: 'POST',
