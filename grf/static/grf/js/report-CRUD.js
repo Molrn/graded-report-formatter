@@ -81,15 +81,15 @@ async function exportToPDF(reportId, fileName, isEditPageOpen) {
             const elementIdsToHide = ["modal-container", "toolbar"];
             elementIdsToHide.forEach((elementId) => 
                 reportHtmlExport.getElementById(elementId).style.display = "none");
-
-            var modifiedHtmlReport = new XMLSerializer().serializeToString(reportHtmlExport);
-            var doc = new jspdf.jsPDF();
-            doc.html(modifiedHtmlReport, {
-                callback: function (pdf) {
-                    pdf.save(fileName + '.pdf');
-                },
-            });
             initializeReportDisplay(reportHtmlExport);
+            var opt = {
+                margin:       1,
+                filename:     fileName+'.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf(reportHtmlExport.getElementsByTagName('body')[0], opt);
         })
         .catch(error => {
             console.error('Error:', error);
