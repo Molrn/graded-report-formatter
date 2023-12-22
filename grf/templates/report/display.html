@@ -8,14 +8,32 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/codemirror.min.css">
 
 <link rel="stylesheet" href="{% static 'grf/css/multi-level-numbering.css' %}">
-<script src="{% static 'grf/js/editable-style.js' %}" defer></script>
+<link rel="stylesheet" href="{% static 'grf/css/toolbar.css' %}">
+<link rel="stylesheet" href="{% static 'grf/css/modal.css' %}">
 
-<div id="editable-style">
-    Document style:
-    <style report-id="{{ report.id }}"></style>
-    <textarea id="css-editor">{{ report.css_style }}</textarea>
-    <button onclick="saveReportStyle()">Save style</button>
-    <br/><br/>
+<script src="{% static 'grf/js/editable-style.js' %}" defer></script>
+<script src="{% static 'grf/js/report-CRUD.js' %}" defer></script>
+
+<div id="toolbar" class="toolbar">
+    <a href="/grf">Home</a>
+    <div class="buttons">
+        <a href="/grf/report/{{ report.id }}">
+            <button>Edit</button>
+        </a>
+        <button onclick="openModal()">Options</button>
+    </div>
+</div>
+
+<div id="modal-container" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div id="editable-style">
+            Document style:
+            <style report-id="{{ report.id }}"></style>
+            <textarea id="css-editor">{{ report.css_style }}</textarea>
+            <button onclick="saveReportStyle()">Save style</button>
+        </div>        
+    </div>
 </div>
 
 <div id="report-title">{{ report.title }}</div>
