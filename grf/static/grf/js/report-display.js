@@ -42,8 +42,8 @@ function setTableOfContents(doc=document){
                 tocElements.pop();
             } 
         }
-
-        tocElements.push(createTOCElement(element.parentElement.textContent, element.id, depth, doc));
+        const title = element.parentElement.getElementsByClassName('section-title')[0].textContent;
+        tocElements.push(createTOCElement(title, element.id, element.textContent, depth, doc));
         previousDepth = depth;
     });
     for (var i=previousDepth; i > 1; i--){
@@ -56,7 +56,7 @@ function setTableOfContents(doc=document){
     doc.getElementById("table-of-contents").appendChild(tableOfContents);
 }
 
-function createTOCElement(title, sectionId, depth, doc=document){
+function createTOCElement(title, sectionId, sectionNumber, depth, doc=document){
     const tocElement = doc.createElement("li");
     const link = doc.createElement("a");
     link.textContent = title;
