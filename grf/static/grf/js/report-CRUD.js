@@ -69,28 +69,25 @@ function exportToJSON(){
     URL.revokeObjectURL(url);
 }
 
-async function exportToPDF() {
-    const reportTitle = document.getElementById('report-title').value;
-    const dictReport = reportToDict();
-    const reportId = await sendReport(dictReport, skip_alert = true);
-
+async function exportToPDF(reportId, fileName, isEditPageOpen) {
+    if(isEditPageOpen) {
+        await saveReport(reportToDict(), true);
+    }
     fetch('/grf/report/' + reportId + '/display')
         .then(response => response.text())
         .then(html => {
-            var element = document.getElementById('editable-style');
-            element.style.display = 'none';
+            var parser = new DOMParser();
+            var reportHtmlExport = parser.parseFromString(html, 'text/html');
+            const elementIdsToHide = ["modal-container", "toolbar"];
+            elementIdsToHide.forEach((elementId) => 
+                reportHtmlExport.getElementById(elementId).style.display = "none");
 
-            var opt = {
-                margin: 10,
-                filename: reportTitle + '.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-
-            html2pdf().from(html).set(opt).outputPdf().then(pdf => {
-                pdf.save();
-                element.style.display = 'block';
+            var modifiedHtmlReport = new XMLSerializer().serializeToString(reportHtmlExport);
+            var doc = new jspdf.jsPDF();
+            doc.html(modifiedHtmlReport, {
+                callback: function (pdf) {
+                    pdf.save(fileName + '.pdf');
+                },
             });
         })
         .catch(error => {

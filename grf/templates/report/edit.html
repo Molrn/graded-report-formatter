@@ -27,7 +27,12 @@
         <a href="/grf/report/{{ report.id }}/display">        
             <button>HTML preview</button>
         </a>
-        <button onclick="exportToPDF()">Export to PDF</button>
+        <button report-id="{{ report.id }}" report-title="{{ report.title }}" 
+            onclick="exportToPDF(
+                this.getAttribute('report-id'), 
+                this.getAttribute('report-title'), true)">
+            Export to PDF
+        </button>
         <button>Export to WORD</button>
     </div>
 </div>

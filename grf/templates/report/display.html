@@ -1,5 +1,8 @@
 {% load static %}
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/codemirror.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/mode/css/css.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/addon/hint/show-hint.js"></script>
@@ -17,6 +20,12 @@
 <div id="toolbar" class="toolbar">
     <a href="/grf">Home</a>
     <div class="buttons">
+        <button report-id="{{ report.id }}" report-title="{{ report.title }}" 
+            onclick="exportToPDF(
+                this.getAttribute('report-id'), 
+                this.getAttribute('report-title'), false)">
+            Export to PDF
+        </button>
         <a href="/grf/report/{{ report.id }}">
             <button>Edit</button>
         </a>
