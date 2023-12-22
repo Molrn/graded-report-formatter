@@ -45,6 +45,8 @@
     </div>
 </div>
 
+<div id="table-of-contents"></div>
+
 <div id="report-title">{{ report.title }}</div>
 {% for report_part in report.reportpart_set.all|dictsort:"order" %}
     {% if report_part.is_included %}

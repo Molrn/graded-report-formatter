@@ -19,5 +19,50 @@ function setSectionNumbers(doc=document){
 
 function initializeReportDisplay(doc=document){
     setSectionNumbers(doc);
+    setTableOfContents(doc);
 } 
 
+function setTableOfContents(doc=document){
+    
+    var previousDepth = 0;
+    var tocElements = [];
+    const tableOfContents = doc.createElement('ul');
+    doc.querySelectorAll('.section-number').forEach(function (element) {
+        var tagName = element.parentElement.tagName.toLowerCase();
+        var depth = parseInt(tagName.replace('h',''));  
+        if(previousDepth >= depth) {
+            for(var i=previousDepth; i >= depth; i--) { 
+                if (i==1) {
+                    tableOfContents.appendChild(tocElements[tocElements.length-1]);
+                } else {
+                    tocElements[tocElements.length-2]
+                        .getElementsByTagName('ul')[0]
+                        .appendChild(tocElements[tocElements.length-1]);
+                }       
+                tocElements.pop();
+            } 
+        }
+
+        tocElements.push(createTOCElement(element.parentElement.textContent, element.id, depth, doc));
+        previousDepth = depth;
+    });
+    for (var i=previousDepth; i > 1; i--){
+        tocElements[tocElements.length-2]
+            .getElementsByTagName('ul')[0]
+            .appendChild(tocElements[tocElements.length-1]);
+        tocElements.pop();
+    }
+    tableOfContents.appendChild(tocElements[tocElements.length-1]);
+    doc.getElementById("table-of-contents").appendChild(tableOfContents);
+}
+
+function createTOCElement(title, sectionId, depth, doc=document){
+    const tocElement = doc.createElement("li");
+    const link = doc.createElement("a");
+    link.textContent = title;
+    link.href = "#" + sectionId;
+    link.style = "text-decoration:none";
+    tocElement.appendChild(link);
+    tocElement.appendChild(doc.createElement("ul"));
+    return tocElement;
+}
