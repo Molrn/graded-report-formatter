@@ -10,12 +10,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/addon/hint/show-hint.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/codemirror.min.css">
 
-<link rel="stylesheet" href="{% static 'grf/css/multi-level-numbering.css' %}">
 <link rel="stylesheet" href="{% static 'grf/css/toolbar.css' %}">
 <link rel="stylesheet" href="{% static 'grf/css/modal.css' %}">
 
 <script src="{% static 'grf/js/editable-style.js' %}" defer></script>
 <script src="{% static 'grf/js/report-CRUD.js' %}" defer></script>
+<script src="{% static 'grf/js/report-display.js' %}"></script>
 
 <div id="toolbar" class="toolbar">
     <a href="/grf">Home</a>
@@ -49,7 +49,10 @@
 {% for report_part in report.reportpart_set.all|dictsort:"order" %}
     {% if report_part.is_included %}
         <div class="report-part" id="part-{{ report_part.id }}">
-            <h1 class="counter" >{{ report_part.title }}</h1>
+            <h1>
+                <span class="section-number"></span>
+                <span class="section-title">{{ report_part.title }}</span>
+            </h1>
             <div class="content">
                 <div class="part-content">{{ report_part.introduction|safe }}</div>
                 {% if report_part.reportsubpart_set.all %}
@@ -63,3 +66,5 @@
         </div>
     {% endif %}    
 {% endfor %}
+
+<script>initializeReportDisplay()</script>

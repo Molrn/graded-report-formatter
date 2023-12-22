@@ -89,6 +89,7 @@ async function exportToPDF(reportId, fileName, isEditPageOpen) {
                     pdf.save(fileName + '.pdf');
                 },
             });
+            initializeReportDisplay(reportHtmlExport);
         })
         .catch(error => {
             console.error('Error:', error);
